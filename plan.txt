@@ -1,0 +1,72 @@
+App requirement:
+
+for all:
+It will have some built in roadmaps. => comes from database => user can only read permission (prohibit CUD)
+roadmap filter (sortable) => category, status (In progess, completed), popularity
+
+for user:
+Account (login/registration) => email/password
+Like (Roadmaps) and save it
+Comment with reply (CRUD own comments) => character limit => reply depth level 3 limit => indented reply for UI
+
+----
+API = api/category/all
+categories
+id
+c_name
+bookmark_id
+roadmaps: [roadmap_id]
+
+
+API = api/category/catRoadML
+roadmap
+id
+image
+title
+caption
+category_id:catRoadML.name
+bookmark_id
+likes_id (count)
+comment_id (count)
+
+API = 
+comments 
+id 
+post_id
+user_id
+comment: string
+reply: [comment1, comment2, comment3]
+
+likes
+id
+roadmap_id
+user_id
+
+bookmarks
+id
+category_id
+user_id
+
+user 
+id
+username (profile)
+email (login)
+password (login)
+liked_post [roadmap_id]
+commented_post [comment_id]
+bookmarked_cat [category_id]
+
+post -> user -> comment
+user [comment_id1, comment_id2]
+comment_id1 -> post_id -> comment -> time -> reply[0/up to 3] << user_id
+reply_id1 -> comment_id1 -> count 
+
+
+comment1 -> reply1i -> reply1ii -> reply1iii
+
+
+
+post_id -> comments -> comment1, comment2, comment3, comment4
+comment1 -> postid, userid(who's), time, reply[reply1, reply2, reply3]
+comments -> are those words which is indicated to a post
+replys -> are those response which is indicated to a comment
