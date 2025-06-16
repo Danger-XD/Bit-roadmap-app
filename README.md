@@ -1,2 +1,5 @@
 # Bit-roadmap-app
-A MERN stack website for roadmaps
+A MERN stack website for roadmaps.
+
+### the .env file contents of server
+- PORT
