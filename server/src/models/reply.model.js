@@ -11,5 +11,5 @@ const replySchema = new Schema(
     versionKey: true,
   }
 );
-const replyModel = mongoose.Model("Reply", replySchema);
+const replyModel = mongoose.model("Reply", replySchema);
 export default replyModel;

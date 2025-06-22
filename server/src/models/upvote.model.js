@@ -11,5 +11,5 @@ const upvoteSchema = new Schema(
   }
 );
 
-const upvoteModel = mongoose.Model("Upvote", upvoteSchema);
+const upvoteModel = mongoose.model("Upvote", upvoteSchema);
 export default upvoteModel;
