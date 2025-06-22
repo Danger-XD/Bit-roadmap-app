@@ -11,7 +11,6 @@ const userSchema = new Schema(
       trim: true,
     },
     password: { type: String, required: true, minLength: 4 },
-    comments: [{ type: String }],
   },
   {
     timestamps: true,
