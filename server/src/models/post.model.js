@@ -6,9 +6,11 @@ const postSchema = new Schema(
     category: {
       type: String,
       required: true,
-      enum: { values: ["Beginner", "Intermediate", "Advanced"] },
+      lowercase:true,
+      enum: { values: ["beginner", "intermediate", "advanced"] },
     },
-    upvote: [{ type: Schema.Types.ObjectId, ref: "Upvote" }],
+    title:{type:String, required:true},
+    upvotes: [{ type: Schema.Types.ObjectId, ref: "Upvote" }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {

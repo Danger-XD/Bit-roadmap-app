@@ -12,3 +12,5 @@ A MERN stack website for roadmaps.
 
 ### DB collection naming conventions
 - Capitalized
+
+Post category must be within these three. (Beginner/Intermediate/Advanced)
