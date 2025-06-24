@@ -19,5 +19,6 @@ A MERN stack website for a roadmap website.
 - SERVER_TOKEN_HTTP
 - SERVER_NODE_ENV
 
+* Backend live link: https://bit-roadmap-app.vercel.app/
 * API routes documentation: https://documenter.getpostman.com/view/28040830/2sB2xCipq6
 * Post category must be within these three. (Beginner/Intermediate/Advanced)
