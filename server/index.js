@@ -5,7 +5,7 @@ dotenv.config();
 
 const port = process.env.PORT || 8080;
 
-app.listen(port, () => {
+app.listen(port, async () => {
+  await dbConnect();
   console.log(`Server is running on ${port}`);
-  dbConnect();
 });
