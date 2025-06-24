@@ -21,9 +21,6 @@ const limiter = rateLimiter({
   limit: 100,
 });
 app.use(limiter);
-app.use("/",(req,res)=>{
-  res.send("Hello from server")
-})
 
 // Base API routes
 import userApi from "./src/routes/user.route.js";
