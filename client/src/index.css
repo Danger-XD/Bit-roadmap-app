@@ -1,14 +1,16 @@
 @import "tailwindcss";
 *{
   outline: none;
-
 }
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
+@theme{
+  --color-orangy:#E67514;
+}
 @layer component {
   .container {
-    @apply w-5xl m-auto;
+    @apply w-5xl mx-auto;
   }
   .flex-job {
     @apply flex justify-center items-center;

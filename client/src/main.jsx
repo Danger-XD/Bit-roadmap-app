@@ -7,6 +7,7 @@ import RoadMap from "./pages/RoadMap.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import ContactUs from "./pages/ContactUs.jsx";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
   { path: "/roadmap", element: <RoadMap /> },
   { path: "/signup", element: <SignupPage /> },
   { path: "/login", element: <LoginPage /> },
+  { path: "/contact", element: <ContactUs /> },
   { path: "*", element: <NotFound /> },
 ]);
 

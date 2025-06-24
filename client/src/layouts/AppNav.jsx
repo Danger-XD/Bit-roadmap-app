@@ -2,7 +2,8 @@ import { Link } from "react-router";
 
 const navItems = [
     {page:"/", option:"Home"},
-    {page:"/roadmap",option:"Roadmap"}
+    {page:"/roadmap",option:"Roadmap"},
+    {page:"/contact",option:"Contact us"}
 ];
 const logItems = [{page:"/login", option:"Login"},
     {page:"/",option:"Logout"}
@@ -11,8 +12,8 @@ const AppNav = () => {
   return (
     <>
       <div className="navbar container">
-        <nav className="h-18 mb-8 flex justify-between items-center">
-          <div className="logo font-extrabold text-4xl">BitRoad</div>
+        <nav className="h-24 mb-8 flex justify-between items-center">
+          <div className="logo font-extrabold text-4xl"><Link to={"/"}><span className="text-orangy">Bit</span>Road</Link></div>
           <div>
             <ul className="flex">
               {navItems.map((item, index) => (

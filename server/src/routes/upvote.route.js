@@ -5,6 +5,6 @@ const router = Router();
 
 router.use(verifyToken);
 
-router.route("/toggle/upvote/:postId").post(upvoteController.togglePostUpvote);// single post upvote 
+router.route("/toggle/:postId").post(upvoteController.togglePostUpvote);// single post upvote 
 
 export default router;
