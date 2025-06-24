@@ -8,7 +8,7 @@ const replySchema = new Schema(
   },
   {
     timestamps: true,
-    versionKey: true,
+    versionKey: false,
   }
 );
 const replyModel = mongoose.model("Reply", replySchema);

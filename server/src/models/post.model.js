@@ -10,7 +10,6 @@ const postSchema = new Schema(
       enum: { values: ["beginner", "intermediate", "advanced"] },
     },
     title:{type:String, required:true},
-    upvotes: [{ type: Schema.Types.ObjectId, ref: "Upvote" }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
