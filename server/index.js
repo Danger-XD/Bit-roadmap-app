@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import dbConnect from "./src/configs/database.config.js";
 dotenv.config();
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 
-app.listen(port, async () => {
-  await dbConnect();
+app.listen(port, () => {
+  dbConnect();
   console.log(`Server is running on ${port}`);
 });
