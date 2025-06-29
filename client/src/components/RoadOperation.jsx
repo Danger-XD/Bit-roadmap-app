@@ -3,19 +3,25 @@ import { FaRegThumbsUp } from "react-icons/fa";
 import { FaThumbsUp } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa";
-import { FaRegCommentAlt } from "react-icons/fa";
 import { FaCommentAlt } from "react-icons/fa";
+import { useParams } from "react-router";
+import { roadPageStore } from "../stores/roadPage.store";
 
 const RoadOperation = () => {
   const [upvote, setUpvote] = useState(true);
   const [bookmark, setBookmark] = useState(true);
+  const { postId } = useParams();
+  const { upVoteBool, upVoteBoolRequest } = roadPageStore();
+  const handleClick = async () => {
+    await upVoteBoolRequest(postId);
+  };
   return (
     <div className="w-full h-10 flex">
       <div className="upvote-btn">
         {upvote ? (
-          <p className="flex items-center p-3">
+          <button onClick={handleClick} className="flex items-center p-3">
             Upvoted &nbsp; <FaThumbsUp className="text-orangy" />
-          </p>
+          </button>
         ) : (
           <p>
             Upvote &nbsp;
@@ -23,11 +29,11 @@ const RoadOperation = () => {
           </p>
         )}
       </div>
-    <div className="comment-btn">
-          <p className="flex items-center p-3">
-            Comments &nbsp; <FaCommentAlt className="text-orangy" />
-          </p>
-    </div>
+      <div className="comment-btn">
+        <p className="flex items-center p-3">
+          Comments &nbsp; <FaCommentAlt className="text-orangy" />
+        </p>
+      </div>
       <div className="bookmark-btn">
         {bookmark ? (
           <p className="flex items-center p-3">

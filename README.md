@@ -24,7 +24,6 @@ A MERN stack website for a roadmap website.
 - For authentication:
     - Sign up page [click here](https://bit-roadmap-app.vercel.app/api/v1/users/signup)
     - Login page [click here](https://bit-roadmap-app.vercel.app/api/v1/users/login)
-    - Logout page [click here](https://bit-roadmap-app.vercel.app/api/v1/users/logout)
 - For posts (Not Secured):
     - Get all the posts Api [click here](https://bit-roadmap-app.vercel.app/api/v1/posts/get/all/posts)
     - Get all the posts by category* filter [click here](https://bit-roadmap-app.vercel.app/api/v1/posts/get/by/category/:categoryId)

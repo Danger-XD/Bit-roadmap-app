@@ -1,9 +1,8 @@
-import PageLayout from "../layouts/PageLayout";
 import ContactForm from "./../components/ContactForm";
 
 const ContactUs = () => {
   return (
-    <PageLayout>
+    <>
       <div className="container h-screen mb-10 w-full flex flex-col justify-between items-center sm:flex-row">
         <div className="text-side w-full sm:w-1/2">
           <h1 className="text-orangy text-6xl font-extrabold mb-8">
@@ -25,7 +24,7 @@ const ContactUs = () => {
           <ContactForm />
         </div>
       </div>
-    </PageLayout>
+    </>
   );
 };
 

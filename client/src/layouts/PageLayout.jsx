@@ -1,13 +1,15 @@
-import React from 'react';
+import { Outlet } from 'react-router';
 import AppNav from './AppNav';
 import Footer from './Footer';
+import { Toaster } from 'react-hot-toast';
 
-const PageLayout = (props) => {
+const PageLayout = () => {
     return (
-        <div className='h-screen flex flex-col justify-between'>
+        <div className='container h-screen flex flex-col items-center justify-between'>
             <AppNav/>
-            {props.children}
+            <Outlet/>
             <Footer/>
+            <div><Toaster/></div>
         </div>
     );
 };

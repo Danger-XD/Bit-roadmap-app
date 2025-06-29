@@ -23,14 +23,14 @@ export const togglePostUpvote = async (req, res) => {
       return res.status(200).json({
         status: "success",
         message: "Toggle: Upvoted post successfully!",
-        post: upvotePost,
+        post: true,
       });
     }
     const removeUpvote = await upvoteModel.deleteOne({ postId });
     return res.status(200).json({
       status: "success",
       message: "Toggle: Down-voted post successfully!",
-      post: removeUpvote,
+      post: false,
     });
   } catch (error) {
     return res.status(500).json({ status: "failed", message: error.message });

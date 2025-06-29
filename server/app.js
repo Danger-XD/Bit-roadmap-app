@@ -8,11 +8,18 @@ import cors from "cors";
 import rateLimiter from "express-rate-limit";
 import helmet from "helmet";
 import express from "express";
+import dotenv from "dotenv";
 const app = express();
+dotenv.config();
 
+app.use(
+  cors({
+    origin: process.env.CLIENT_BASE_URL,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-app.use(cors());
 app.use(helmet());
 app.use(hpp());
 app.use(cookieParser());
@@ -26,8 +33,9 @@ app.use(limiter);
 import userApi from "./src/routes/user.route.js";
 import postApi from "./src/routes/post.route.js";
 import upvoteApi from "./src/routes/upvote.route.js";
-import commentApi from "./src/routes/comment.route.js"
-import replyApi from "./src/routes/reply.route.js"
+import commentApi from "./src/routes/comment.route.js";
+import replyApi from "./src/routes/reply.route.js";
+
 app.use("/api/v1/users", userApi);
 app.use("/api/v1/posts", postApi);
 app.use("/api/v1/post/upvote", upvoteApi);
