@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import dbConnect from "./src/configs/database.config.js";
 dotenv.config();
 
-const port = process.env.PORT;
+const port = process.env.SERVER_PORT;
 
 app.listen(port, () => {
   dbConnect();
