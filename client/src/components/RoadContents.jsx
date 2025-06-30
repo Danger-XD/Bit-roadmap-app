@@ -24,7 +24,7 @@ const RoadContents = () => {
           id="category"
           onChange={handleSelection}
         >
-          <option selected hidden disabled>
+          <option selected="selected" hidden disabled>
             Category
           </option>
           <option value="beginner">Beginner</option>

@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 const RoadDescription = () => {
   const {postId} = useParams();
   return (
-    <div className="w-full h-fit p-3 mb-10 ">
+    <div className="w-full h-fit p-3 mb-3">
       <div>
         <span className="font-semibold">Category:</span> Beginner
       </div>
