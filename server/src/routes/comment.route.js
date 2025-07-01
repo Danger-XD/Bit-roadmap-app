@@ -3,8 +3,17 @@ const router = Router();
 import * as commentController from "../controllers/comment.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 
-router.use(verifyToken);
-router.route("/c/create/:postId").post(commentController.commentPost);
-router.route("/c/delete/:postId").delete(commentController.deleteCommentPost);
+// GET -> a single post comments (not secured)
+router.route("/c/comments/:postId").get(commentController.getComments);
+
+// POST -> create a comment (secured)
+router
+  .route("/c/create/:postId")
+  .post(verifyToken, commentController.commentPost);
+
+// GET -> delete a comment (secured)
+router
+  .route("/c/delete/:postId")
+  .delete(verifyToken, commentController.deleteCommentPost);
 
 export default router;

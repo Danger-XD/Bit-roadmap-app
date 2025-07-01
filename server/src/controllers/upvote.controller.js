@@ -13,7 +13,7 @@ export const togglePostUpvote = async (req, res) => {
     const checkPost = await postModel.findOne({ _id: postId });
     if (!checkPost) {
       return res
-        .status(400)
+        .status(200)
         .json({ status: "failed", message: "Upvote: Post not found!" });
     }
     // check if post is liked by user and if not then make it true
@@ -37,27 +37,27 @@ export const togglePostUpvote = async (req, res) => {
   }
 };
 
-export const getPostUpvote = async (req, res) => {
-  try {
-    // get post Id
-    const { postId } = req.params;
-    // check post exist
-    const checkPost = await postModel.findOne({ _id: postId });
-    if (!checkPost) {
-      return res
-        .status(400)
-        .json({ status: "failed", message: "Upvote: Post not found!" });
-    }
-    // get all the upvote count
-    const countUpvote = await upvoteModel.countDocuments({
-      postId: new ObjectId(postId),
-    });
-    return res.status(200).json({
-      status: "success",
-      message: "Counter: Number of post upvote fetched successfully!",
-      post: countUpvote,
-    });
-  } catch (error) {
-    return res.status(500).json({ status: "failed", message: error.message });
-  }
-};
+// export const getPostUpvote = async (req, res) => {
+//   try {
+//     // get post Id
+//     const { postId } = req.params;
+//     // check post exist
+//     const checkPost = await postModel.findOne({ _id: postId });
+//     if (!checkPost) {
+//       return res
+//         .status(200)
+//         .json({ status: "failed", message: "Upvote: Post not found!" });
+//     }
+//     // get all the upvote count
+//     const countUpvote = await upvoteModel.countDocuments({
+//       postId: new ObjectId(postId),
+//     });
+//     return res.status(200).json({
+//       status: "success",
+//       message: "Counter: Number of post upvote fetched successfully!",
+//       post: countUpvote,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({ status: "failed", message: error.message });
+//   }
+// };

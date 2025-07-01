@@ -11,7 +11,7 @@ export const replyComment = async (req, res) => {
     const checkComment = await commentModel.findOne({ _id: commentId });
     if (!checkComment) {
       return res
-        .status(400)
+        .status(200)
         .json({ status: "failed", message: "Reply: Post not found!" });
     }
     // count comments reply
@@ -19,7 +19,7 @@ export const replyComment = async (req, res) => {
       commentId: new ObjectId(commentId),
     });
     if (countReply > 3) {
-      return res.status(400).json({
+      return res.status(200).json({
         status: "failed",
         message: "Reply: Reply limit reached on comment!",
       });
@@ -27,7 +27,7 @@ export const replyComment = async (req, res) => {
     // get reply from user
     const { reply } = req.body;
     if (!reply) {
-      return res.status(400).json({
+      return res.status(200).json({
         status: "failed",
         message: "Reply: Reply field required!",
       });

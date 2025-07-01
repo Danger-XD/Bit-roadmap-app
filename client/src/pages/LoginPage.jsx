@@ -26,7 +26,7 @@ const LoginPage = () => {
       await loginInfoRequest(loginInfo);
       const { status, message, token } = loginResponse;
       if (status) {
-        setCookies("Token", token);
+        setCookies("token", token);
         handleSuccess(message);
         setTimeout(() => {
           navigate("/");
@@ -38,7 +38,7 @@ const LoginPage = () => {
   };
   return (
     <>
-      <div className="w-[22rem] h-[22rem] mb-24 shadow-effect flex-job flex-col rounded">
+      <div className="w-[22rem] h-fit py-8 mb-24 shadow-effect flex-job flex-col rounded">
         <h2 className="font-extrabold text-4xl">Login</h2>
         <form onSubmit={handleLoginSubmit}>
           <div className="my-4">
@@ -63,7 +63,7 @@ const LoginPage = () => {
           </div>
           <div>
             <button
-              className="bg-black text-white text-xl w-full h-[2.5rem] rounded-2xl font-bold tracking-wider mb-4"
+              className="cursor-pointer bg-black text-white text-xl w-full h-[2.5rem] rounded-2xl font-bold tracking-wider mb-4"
               type="submit"
             >
               Login

@@ -1,38 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { FaRegThumbsUp } from "react-icons/fa";
-import { FaThumbsUp } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa";
-import { FaCommentAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { roadPageStore } from "../stores/roadPage.store";
-import { getCookies } from "../utilities/cookies";
+import { roadPageStore } from "../stores/roadPage.store.js";
+import { getCookies } from "../utilities/cookies.js";
+import { BiUpvote } from "react-icons/bi";
+import { BiSolidUpvote } from "react-icons/bi";
 
 const RoadOperation = () => {
   const { postId } = useParams();
-  const [upvote, setUpvote] = useState();
+  const [showUpvote, setShowUpvote] = useState();
   const { upVoteBool, upVoteBoolRequest } = roadPageStore();
+
   const handleClick = async () => {
     await upVoteBoolRequest(postId);
   };
-  useEffect(()=>{
-    if(getCookies("Token")){
-      setUpvote(true)
-    }else{
-      setUpvote(false)
-    }
-  },[])
+  useEffect(() => {
+    const token = getCookies("token");
+    setShowUpvote(token);
+  }, [postId]);
   return (
-    <div className={upvote?"w-full h-10 flex":"hidden"} >
+    <div className={showUpvote ? "w-full h-10 flex" : "hidden"}>
       <div>
-        {upvote ? (
+        {upVoteBool ? (
           <button onClick={handleClick} className="flex items-center p-3">
-            Upvoted &nbsp; <FaThumbsUp className="text-orangy" />
+            <BiSolidUpvote className="text-orangy text-2xl cursor-pointer" />{" "}
+            &nbsp; Upvoted
           </button>
         ) : (
-          <button onClick={handleClick}>
-            Upvote &nbsp;
-            <FaRegThumbsUp className="text-orangy" />
+          <button onClick={handleClick} className="flex items-center p-3">
+            <BiUpvote className="text-orangy text-2xl cursor-pointer" /> &nbsp;
+            Upvote
           </button>
         )}
       </div>
@@ -42,7 +38,8 @@ const RoadOperation = () => {
 
 export default RoadOperation;
 
-{/* <div className="comment-btn">
+{
+  /* <div className="comment-btn">
   <p className="flex items-center p-3">
     Comments &nbsp; <FaCommentAlt className="text-orangy" />
   </p>
@@ -58,4 +55,5 @@ export default RoadOperation;
       <FaRegBookmark className="text-orangy" />
     </p>
   )}
-</div> */}
+</div> */
+}

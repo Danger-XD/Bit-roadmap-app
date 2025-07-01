@@ -1,17 +1,43 @@
 import { useParams } from "react-router";
+import { roadPageStore } from "../stores/roadPage.store.js";
+import { useEffect } from "react";
+import { FaRegCommentAlt } from "react-icons/fa";
+import { BiUpvote } from "react-icons/bi";
 
 const RoadDescription = () => {
-  const {postId} = useParams();
+  const { postId } = useParams();
+  const { singlePostInfo, singlePostInfoRequest } = roadPageStore();
+  const { category, title,upvoteCounts,commentCounts } = singlePostInfo;
+  useEffect(() => {
+    const fetchData = async (postId) => {
+      await singlePostInfoRequest(postId);
+    };
+    fetchData(postId);
+  }, [postId]);
   return (
-    <div className="w-full h-fit p-3 mb-3">
-      <div>
-        <span className="font-semibold">Category:</span> Beginner
+    <div className="w-full h-fit p-3 mb-2">
+      <div className="flex justify-between mb-1">
+        <div>
+          <div className="text-3xl mb-1">
+            <span className="font-semibold">Title:</span>&nbsp;
+            {title}
+          </div>
+          <div className="capitalize mb-1">
+            <span className="font-semibold">Category:</span>&nbsp;
+            {category}
+          </div>
+          <div>
+            <span className="font-semibold">Post Id:</span>&nbsp;{postId}
+          </div>
+        </div>
+        <div>
+          <div className="flex">
+            <div className="flex items-center"><BiUpvote className="text-orangy text-2xl" />&nbsp;{upvoteCounts}</div>
+            <div className="flex items-center pl-2"><FaRegCommentAlt className="text-orangy text-xl" />&nbsp;{commentCounts}</div>
+          </div>
+        </div>
       </div>
       <div>
-        <span className="font-semibold">Post Id:</span> {postId}
-      </div>
-      <div>
-        <br />
         <span className="font-semibold">Description:</span> Lorem ipsum dolor
         sit amet consectetur adipisicing elit. Reiciendis officiis nesciunt
         molestiae temporibus alias numquam sit voluptatem quasi esse ea?

@@ -9,7 +9,7 @@ export const roadmapStore = create((set) => ({
       const response = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/posts/get/all/posts`
       );
-      // console.log(response.data.data); to get data of array of objects
+      // console.log(response.data.data);
       if (!response) {
         throw new Error(response?.error);
       }
@@ -23,7 +23,7 @@ export const roadmapStore = create((set) => ({
       const response = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/posts/get/by/category/${filterBy}`
       );
-      // console.log(response.data.data); to get data of array of objects
+      // console.log(response.data.data);
       if (!response) {
         throw new Error(response?.error);
       }

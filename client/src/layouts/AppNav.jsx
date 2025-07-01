@@ -16,10 +16,10 @@ const AppNav = () => {
 
   const handleLogout = () => {
     setAuthentic(false);
-    deleteCookies("Token");
+    deleteCookies("token");
   };
   useEffect(() => {
-    if (getCookies("Token")) {
+    if (getCookies("token")) {
       setAuthentic(true);
     } else {
       setAuthentic(false);

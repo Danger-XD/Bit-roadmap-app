@@ -45,7 +45,7 @@ const SignupPage = () => {
   };
   return (
     <>
-      <div className="w-[24rem] h-[26rem] mb-24 shadow-effect flex-job flex-col rounded">
+      <div className="w-[24rem] h-fit py-8 mb-24 shadow-effect flex-job flex-col rounded">
         <h2 className="font-extrabold text-4xl">Sign up</h2>
         <form onSubmit={handleSubmit}>
           <div className="my-4">
@@ -80,7 +80,7 @@ const SignupPage = () => {
           </div>
           <div className="my-5">
             <button
-              className="bg-black text-white text-xl w-full h-[2.5rem] rounded-2xl font-bold tracking-wider"
+              className="cursor-pointer bg-black text-white text-xl w-full h-[2.5rem] rounded-2xl font-bold tracking-wider"
               type="submit"
             >
               Sign Up

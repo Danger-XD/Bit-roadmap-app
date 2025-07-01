@@ -3,8 +3,8 @@ import ContactForm from "./../components/ContactForm";
 const ContactUs = () => {
   return (
     <>
-      <div className="container h-screen mb-10 w-full flex flex-col justify-between items-center sm:flex-row">
-        <div className="text-side w-full sm:w-1/2">
+      <div className="container my-4 w-full flex flex-col justify-between items-center sm:flex-row">
+        <div className="w-full pb-16 sm:w-1/2">
           <h1 className="text-orangy text-6xl font-extrabold mb-8">
             Contact Us
           </h1>
@@ -20,7 +20,7 @@ const ContactUs = () => {
             inconvenience.
           </p>
         </div>
-        <div className="form-side w-full sm:w-96">
+        <div className=" w-full sm:w-96">
           <ContactForm />
         </div>
       </div>
