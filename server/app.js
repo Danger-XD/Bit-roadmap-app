@@ -25,7 +25,7 @@ app.use(hpp());
 app.use(cookieParser());
 const limiter = rateLimiter({
   windowMs: 15 * 60 * 1000,
-  limit: 100,
+  limit: 200,
 });
 app.use(limiter);
 

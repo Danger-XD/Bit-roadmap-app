@@ -37,27 +37,36 @@ export const togglePostUpvote = async (req, res) => {
   }
 };
 
-// export const getPostUpvote = async (req, res) => {
-//   try {
-//     // get post Id
-//     const { postId } = req.params;
-//     // check post exist
-//     const checkPost = await postModel.findOne({ _id: postId });
-//     if (!checkPost) {
-//       return res
-//         .status(200)
-//         .json({ status: "failed", message: "Upvote: Post not found!" });
-//     }
-//     // get all the upvote count
-//     const countUpvote = await upvoteModel.countDocuments({
-//       postId: new ObjectId(postId),
-//     });
-//     return res.status(200).json({
-//       status: "success",
-//       message: "Counter: Number of post upvote fetched successfully!",
-//       post: countUpvote,
-//     });
-//   } catch (error) {
-//     return res.status(500).json({ status: "failed", message: error.message });
-//   }
-// };
+export const getPostUpvote = async (req, res) => {
+  try {
+    // get post Id
+    const { postId } = req.params;
+    // check post exist
+    const checkPost = await postModel.findOne({ _id: postId });
+    if (!checkPost) {
+      return res
+        .status(200)
+        .json({ status: "failed", message: "Upvote: Post not found!" });
+    }
+    const { _id: userId } = req.user;
+    // check if user upvote the post or not
+    const booleanUpvote = await upvoteModel.findOne({
+      postId: new ObjectId(postId),
+      userId: new ObjectId(userId),
+    });
+    if (!booleanUpvote) {
+      return res.status(200).json({
+        status: "success",
+        message: "Upvote: Post is not upvoted !",
+        post: false,
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      message: "Upvote: Post is upvoted!",
+      post: true,
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "failed", message: error.message });
+  }
+};

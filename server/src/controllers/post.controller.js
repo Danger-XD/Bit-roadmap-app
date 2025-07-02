@@ -218,8 +218,6 @@ export const createPost = async (req, res) => {
       postImg,
       category,
       title,
-      upvotes: [],
-      comments: [],
     });
     // check data created or not
     if (!post) {

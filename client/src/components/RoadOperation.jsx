@@ -8,19 +8,30 @@ import { BiSolidUpvote } from "react-icons/bi";
 const RoadOperation = () => {
   const { postId } = useParams();
   const [showUpvote, setShowUpvote] = useState();
-  const { upVoteBool, upVoteBoolRequest } = roadPageStore();
-
+  const {
+    upVoteBoolRequest,
+    postUpvoteCheck,
+    postUpvoteCheckRequest,
+    singlePostInfoRequest,
+  } = roadPageStore();
   const handleClick = async () => {
     await upVoteBoolRequest(postId);
+    await postUpvoteCheckRequest(postId);
+    await singlePostInfoRequest(postId);
   };
+  const { post: upvoteChecker } = postUpvoteCheck;
   useEffect(() => {
     const token = getCookies("token");
     setShowUpvote(token);
+    const fetchData = async (postId) => {
+      await postUpvoteCheckRequest(postId);
+    };
+    showUpvote ? fetchData(postId) : "";
   }, [postId]);
   return (
     <div className={showUpvote ? "w-full h-10 flex" : "hidden"}>
       <div>
-        {upVoteBool ? (
+        {upvoteChecker ? (
           <button onClick={handleClick} className="flex items-center p-3">
             <BiSolidUpvote className="text-orangy text-2xl cursor-pointer" />{" "}
             &nbsp; Upvoted

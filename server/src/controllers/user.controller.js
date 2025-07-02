@@ -96,10 +96,12 @@ export const login = async (req, res) => {
       sameSite: "strict",
     };
     // return and set token to cookie
-    return res
-      .status(200)
-      .cookie("token", token, options)
-      .json({ status: "success", message: "Login: Login successful!", token });
+    return res.status(200).cookie("token", token, options).json({
+      status: "success",
+      message: "Login: Login successful!",
+      token,
+      username: profileCheck.username,
+    });
   } catch (error) {
     return res.status(500).json({ status: "failed", message: error.message });
   }
@@ -117,6 +119,31 @@ export const logout = async (req, res) => {
       .status(200)
       .cookie("token", "", options)
       .json({ status: "success", message: "Logout: Logout successful!" });
+  } catch (error) {
+    return res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
+export const getPersonalInfo = async (req, res) => {
+  try {
+    // get user info from middleware
+    const { _id } = req.user;
+    // get user info from DB
+    const userInfo = await userModel.findOne({ _id }).select("-password");
+    if (!userInfo) {
+      return res.status(404).json({
+        status: "success",
+        message: "User: No user found !",
+      });
+    }
+    const { username, email } = userInfo;
+    // return info
+    return res.status(200).json({
+      status: "success",
+      message: "User: User info fetched successfully!",
+      username,
+      email,
+    });
   } catch (error) {
     return res.status(500).json({ status: "failed", message: error.message });
   }
