@@ -7,25 +7,35 @@ import { handleError } from "../utilities/toasts.js";
 const RoadComment = () => {
   const { postId } = useParams();
   const {
-    createCommentRequest,
-    singlePostComment,
-    singlePostCommentRequest,
     userInfoForAuth,
     userInfoForAuthRequest,
+    singlePostInfoRequest,
+    singlePostComment,
+    singlePostCommentRequest,
+    createCommentRequest,
+    updateCommentRequest,
+    deleteCommentRequest,
   } = roadPageStore();
   const { username: loggedInUser } = userInfoForAuth;
   const [commentInfo, setCommentInfo] = useState({ comment: "" });
+  const [updateInfo, setUpdateInfo] = useState({ comment: "" });
   const [replyInfo, setReplyInfo] = useState({ reply: "" });
   const [showReplyBox, setShowReplyBox] = useState();
   const [showUpdateBox, setShowUpdateBox] = useState();
   const navigate = useNavigate();
-  // To get the value written in the comment/reply box
+  // To get the value written in the comment/reply/update box
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "comment") {
       setCommentInfo((state) => ({
         ...state,
         [name]: value,
+      }));
+    }
+    if (name === "update") {
+      setUpdateInfo((state) => ({
+        ...state,
+        comment: value,
       }));
     }
     if (name === "reply") {
@@ -51,26 +61,46 @@ const RoadComment = () => {
     }
     await createCommentRequest(postId, comment);
     await singlePostCommentRequest(postId);
+    await singlePostInfoRequest(postId);
     setCommentInfo({ comment: "" });
   };
+  // to reply to a comment
   const handleReply = (id) => {
     setShowReplyBox(id);
-    // const { _id: commentId } = item;
+    setShowUpdateBox(null);
   };
-  const handleReplyUpdate = (id) => {
+  // to show/hide update box
+  const handleUpdateBox = (id) => {
     setShowUpdateBox(id);
-    // const { _id: commentId } = item;
+    setShowReplyBox(null);
+  };
+  const handleCommentUpdate = async (e, id) => {
+    e.preventDefault();
+    const { comment } = updateInfo;
+    await updateCommentRequest(id, comment);
+    await singlePostCommentRequest(postId);
+    setShowUpdateBox(null);
+  };
+  const handleCancelButton = () => {
+    setShowReplyBox(null);
+  };
+  // to delete a comment
+  const handleDeleteComment = async (commentId) => {
+    await deleteCommentRequest(commentId);
+    await singlePostCommentRequest(postId);
+    await singlePostInfoRequest(postId);
   };
   useEffect(() => {
-    const fetchData = async (postId) => {
+    const fetchData = async () => {
       await singlePostCommentRequest(postId);
       getCookies("token") ? await userInfoForAuthRequest() : "";
     };
-    fetchData(postId);
+    fetchData();
   }, [postId]);
   return (
     <div className="container h-fit mb-10 rounded-2xl scroll-auto px-3">
       <div className="bg-orange-300 rounded p-2 mb-4">
+        {/* Form to submit a comment */}
         <form onSubmit={handleCommentSubmit}>
           <div>
             <textarea
@@ -94,6 +124,7 @@ const RoadComment = () => {
         </form>
       </div>
       <div>
+        {/* Show comment section */}
         <div className="font-semibold pb-4">Comments:</div>
         <div>
           {singlePostComment.length === 0 ? (
@@ -123,14 +154,29 @@ const RoadComment = () => {
                         <div className="flex">
                           <div>
                             <button
-                              onClick={() => handleReplyUpdate(item._id)}
+                              onClick={() => {
+                                handleUpdateBox(item._id);
+                                setUpdateInfo({ comment: item.comment });
+                              }}
                               className="font-semibold text-[14px] mr-6 cursor-pointer"
                             >
                               Update
                             </button>
                           </div>
                           <div>
-                            <button className="font-semibold text-[14px] cursor-pointer">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Are you sure you want to delete this comment?"
+                                  )
+                                ) {
+                                  handleDeleteComment(item._id);
+                                }
+                              }}
+                              className="font-semibold text-[14px] cursor-pointer"
+                            >
                               Delete
                             </button>
                           </div>
@@ -139,9 +185,10 @@ const RoadComment = () => {
                     </div>
                   </div>
                   <div>
+                    {/* Reply Box */}
                     {showReplyBox === item._id && (
                       <div className="bg-gray-200 rounded p-2 mb-4">
-                        <form onSubmit={handleCommentSubmit}>
+                        <form onSubmit={handleReply}>
                           <div>
                             <textarea
                               name="reply"
@@ -155,7 +202,15 @@ const RoadComment = () => {
                           </div>
                           <div className="text-end">
                             <button
+                              type="button"
+                              onClick={handleCancelButton}
+                              className="cursor-pointer mr-3 bg-black text-white font-semibold px-4 py-2 rounded-xl"
+                            >
+                              Cancel
+                            </button>
+                            <button
                               type="submit"
+                              onSubmit={handleReply}
                               className="cursor-pointer bg-black text-white font-semibold px-4 py-2 rounded-xl"
                             >
                               Reply
@@ -166,17 +221,19 @@ const RoadComment = () => {
                     )}
                   </div>
                   <div>
+                    {/* Update box */}
                     {showUpdateBox === item._id && (
                       <div className="bg-gray-200 rounded p-2 mb-4">
-                        <form onSubmit={handleCommentSubmit}>
+                        <form
+                          onSubmit={(e) => handleCommentUpdate(e, item._id)}
+                        >
                           <div>
                             <textarea
-                              name="reply"
-                              id="replyBox"
+                              name="update"
+                              id="commentUpdate"
                               className="resize-none bg-white w-full pl-2 pt-2"
                               rows={4}
-                              placeholder="Write a reply..."
-                              value={replyInfo.reply}
+                              value={updateInfo.comment}
                               onChange={handleChange}
                             ></textarea>
                           </div>
@@ -185,7 +242,7 @@ const RoadComment = () => {
                               type="submit"
                               className="cursor-pointer bg-black text-white font-semibold px-4 py-2 rounded-xl"
                             >
-                              Reply
+                              Update
                             </button>
                           </div>
                         </form>

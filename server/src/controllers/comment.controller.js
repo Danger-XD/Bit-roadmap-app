@@ -45,13 +45,11 @@ export const getComments = async (req, res) => {
     ]);
 
     if (comments.length === 0) {
-      return res
-        .status(200)
-        .json({
-          status: "success",
-          message: "Comment: No comment found",
-          post: [],
-        });
+      return res.status(200).json({
+        status: "success",
+        message: "Comment: No comment found",
+        post: [],
+      });
     }
     return res.status(200).json({
       status: "success",
@@ -99,23 +97,65 @@ export const commentPost = async (req, res) => {
     return res.status(500).json({ status: "failed", message: error.message });
   }
 };
+export const updateComment = async (req, res) => {
+  try {
+    // get comment Id
+    const { commentId: _id } = req.params;
+    // check comment exist
+    const checkComment = await commentModel.findOne({ _id: new ObjectId(_id) });
+    if (!checkComment) {
+      return res
+        .status(404)
+        .json({ status: "failed", message: "Comment: Comment not found!" });
+    }
+    // checking if user is authorized to update a comment
+    if (checkComment.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        status: "failed",
+        message: "You are not authorized to update this comment.",
+      });
+    }
+    // get comment from user
+    const { comment } = req.body;
+    if (!comment || comment.trim().length === 0) {
+      return res.status(200).json({
+        status: "success",
+        message: "Comment: Comment on post required!",
+      });
+    }
+    const updateResponse = await commentModel.findByIdAndUpdate(
+      new ObjectId(_id),
+      { comment },
+      { new: true }
+    );
+    return res.status(200).json({
+      status: "success",
+      message: "Comment: Comment updated successfully!",
+      post: updateResponse,
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
 export const deleteCommentPost = async (req, res) => {
   try {
     // get post Id
-    const { postId } = req.params;
+    const { commentId: _id } = req.params;
     // check post exist
-    const checkPost = await commentModel.findOne({ postId });
+    const checkPost = await commentModel.findOne({ _id });
     if (!checkPost) {
       return res.status(200).json({
         status: "success",
         message: "Comment: No comment comment on the post!",
       });
     }
-    const createComment = await commentModel.deleteOne({ postId });
+    const deleteComment = await commentModel.deleteOne({ _id });
     return res.status(200).json({
       status: "success",
       message: "Comment: Comment deleted successfully!",
-      post: createComment,
+      deleted: true,
+      post: deleteComment,
     });
   } catch (error) {
     return res.status(500).json({ status: "failed", message: error.message });

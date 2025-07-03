@@ -1,7 +1,7 @@
 // All the api of single page of roadmap
 import { create } from "zustand";
 import axios from "axios";
-import { handleError } from "../utilities/toasts";
+import { handleError, handleSuccess } from "../utilities/toasts";
 
 export const roadPageStore = create((set) => ({
   userInfoForAuth: {},
@@ -11,7 +11,6 @@ export const roadPageStore = create((set) => ({
         `${import.meta.env.VITE_BASE_URL}/users/personal/info`,
         { withCredentials: true }
       );
-      console.log(response.data);
       set({ userInfoForAuth: response.data });
     } catch (error) {
       handleError(error.message);
@@ -40,7 +39,6 @@ export const roadPageStore = create((set) => ({
           withCredentials: true,
         }
       );
-      console.log(response.data);
       set({ postUpvoteCheck: response?.data });
     } catch (error) {
       handleError(error.message);
@@ -78,6 +76,33 @@ export const roadPageStore = create((set) => ({
         { comment },
         { withCredentials: true }
       );
+    } catch (error) {
+      handleError(error.message);
+    }
+  },
+  // update a comment
+  updateCommentRequest: async (commentId, comment) => {
+    try {
+      const response = await axios.patch(
+        `${import.meta.env.VITE_BASE_URL}/post/comment/c/update/${commentId}`,
+        { comment },
+        { withCredentials: true }
+      );
+      handleSuccess(response?.data.message)
+    } catch (error) {
+      handleError(error.message);
+    }
+  },
+  // delete a comment
+  deleteCommentRequest: async (commentId) => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/post/comment/c/delete/${commentId}`,
+        { withCredentials: true }
+      );
+      if (response?.data.deleted) {
+        handleSuccess(response.data.message);
+      }
     } catch (error) {
       handleError(error.message);
     }

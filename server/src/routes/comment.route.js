@@ -11,9 +11,14 @@ router
   .route("/c/create/:postId")
   .post(verifyToken, commentController.commentPost);
 
-// GET -> delete a comment (secured)
+// PATCH -> update a comment (secured)
 router
-  .route("/c/delete/:postId")
+  .route("/c/update/:commentId")
+  .patch(verifyToken, commentController.updateComment);
+
+// DELETE -> delete a comment (secured)
+router
+  .route("/c/delete/:commentId")
   .delete(verifyToken, commentController.deleteCommentPost);
 
 export default router;
