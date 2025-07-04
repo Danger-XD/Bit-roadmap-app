@@ -85,7 +85,8 @@ const RoadComment = () => {
     setShowReplyBox(null);
   };
   // to delete a comment
-  const handleDeleteComment = async (commentId) => {
+  const handleDeleteComment = async (e,commentId) => {
+    e.preventDefault()
     await deleteCommentRequest(commentId);
     await singlePostCommentRequest(postId);
     await singlePostInfoRequest(postId);
@@ -166,13 +167,13 @@ const RoadComment = () => {
                           <div>
                             <button
                               type="button"
-                              onClick={() => {
+                              onClick={(e) => {
                                 if (
                                   window.confirm(
                                     "Are you sure you want to delete this comment?"
                                   )
                                 ) {
-                                  handleDeleteComment(item._id);
+                                  handleDeleteComment(e,item._id);
                                 }
                               }}
                               className="font-semibold text-[14px] cursor-pointer"
