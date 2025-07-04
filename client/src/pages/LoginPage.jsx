@@ -38,8 +38,8 @@ const LoginPage = () => {
   };
   return (
     <>
-      <div className="w-[22rem] h-fit py-8 mb-24 shadow-effect flex-job flex-col rounded">
-        <h2 className="font-extrabold text-4xl">Login</h2>
+      <div className="w-[19rem] sm:w-[22rem] h-fit py-8 mt-10 sm:mt-0 mb-24 shadow-effect flex-job flex-col rounded">
+        <h2 className="font-extrabold text-3xl sm:text-4xl">Login</h2>
         <form onSubmit={handleLoginSubmit}>
           <div className="my-4">
             <label className="text-gray-600">Email</label>

@@ -45,8 +45,8 @@ const SignupPage = () => {
   };
   return (
     <>
-      <div className="w-[24rem] h-fit py-8 mb-24 shadow-effect flex-job flex-col rounded">
-        <h2 className="font-extrabold text-4xl">Sign up</h2>
+      <div className="w-[19rem] sm:w-[24rem] h-fit py-8 mt-10 sm:mt-0 mb-24 shadow-effect flex justify-center items-center flex-col rounded">
+        <h2 className="font-extrabold text-3xl sm:text-4xl">Sign up</h2>
         <form onSubmit={handleSubmit}>
           <div className="my-4">
             <label className="text-gray-600">Username:</label>

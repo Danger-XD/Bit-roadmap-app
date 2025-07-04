@@ -15,10 +15,11 @@ const RoadDescription = () => {
     fetchData(postId);
   }, [postId]);
   return (
-    <div className="w-full h-fit p-3 mb-2">
-      <div className="flex justify-between mb-1">
+    <div className="w-full h-fit px-2 sm:p-3 mb-2">
+      <div className="flex justify-between mt-2 mb-1">
+        {/* post category and id */}
         <div>
-          <div className="text-3xl mb-1">
+          <div className="text-xl sm:text-3xl mb-1">
             <span className="font-semibold">Title:</span>&nbsp;
             {title}
           </div>
@@ -30,13 +31,15 @@ const RoadDescription = () => {
             <span className="font-semibold">Post Id:</span>&nbsp;{postId}
           </div>
         </div>
+        {/* post upvote and comment count */}
         <div>
           <div className="flex">
-            <div className="flex items-center"><BiUpvote className="text-orangy text-2xl" />&nbsp;{upvoteCounts}</div>
+            <div className="flex items-center"><BiUpvote className="text-orangy text-xl sm:text-2xl" />&nbsp;{upvoteCounts}</div>
             <div className="flex items-center pl-2"><FaRegCommentAlt className="text-orangy text-xl" />&nbsp;{commentCounts}</div>
           </div>
         </div>
       </div>
+      {/* post description */}
       <div>
         <span className="font-semibold">Description:</span> Lorem ipsum dolor
         sit amet consectetur adipisicing elit. Reiciendis officiis nesciunt

@@ -1,14 +1,13 @@
-import { FaFacebookF } from "react-icons/fa6";
-import { FaLinkedinIn } from "react-icons/fa6";
+import { FaFacebookF, FaLinkedinIn } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
 import { Link } from "react-router";
 
 const Footer = () => {
   return (
     <div className="container mt-14">
-      <div className="w-full grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-8">
+      <div className="w-full grid px-2 sm:gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-8">
         {/* Footer: short description box */}
-        <div>
+        <div className="mb-6 sm:mb-0">
           <h3 className="font-extrabold text-4xl mb-4">
             <span className="text-orangy">Bit</span>Road
           </h3>
@@ -20,9 +19,9 @@ const Footer = () => {
           </p>
         </div>
         {/* Footer: important links box */}
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center mb-6 sm:mb-0">
           <div>
-            <h6 className="font-bold text-2xl mb-4">Bit Apps</h6>
+            <h3 className="font-bold text-3xl mb-2">Bit Apps</h3>
           </div>
           <div className="flex flex-col items-center font-semibold">
             <Link>About Us</Link>
@@ -36,30 +35,42 @@ const Footer = () => {
           </div>
         </div>
         {/* Footer: newsletter subscription box */}
-        <div className="newsletter flex flex-col p-5 rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl bg-[url(https://cdn.pixabay.com/photo/2021/09/17/11/32/flowers-6632403_640.png)] text-white font-semibold">
-          <h3 className="mb-2 text-xl text-white font-serif">Subscribe Our Newsletter!</h3>
-          <form action="">
-            <div>
-              <input type="email" className="w-full pl-2 mb-2 bg-white text-black rounded h-10" />
-            </div>
-            <div>
-              <button type="submit" className="border-4 border-black font-serif p-4 rounded-xl cursor-pointer hover:bg-pink-600 hover:text-white bg-white text-black">Subscribe Now</button>
-            </div>
-          </form>
+        <div className="flex justify-center w-full">
+          <div className="flex flex-col px-5 py-8 w-[20rem] sm:w-full rounded-tl-3xl rounded-tr-3xl rounded-bl-3xl text-white font-semibold bg-[url(https://cdn.pixabay.com/photo/2021/09/17/11/32/flowers-6632403_640.png)]">
+            <h3 className="mb-2 text-xl text-white font-serif">
+              Subscribe Our Newsletter!
+            </h3>
+            <form action="">
+              <div>
+                <input
+                  type="email"
+                  className="w-full pl-2 mb-2 bg-white text-black rounded h-10"
+                />
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  className="border-4 border-black font-serif p-4 rounded-xl cursor-pointer hover:bg-pink-600 hover:text-white bg-white text-black"
+                >
+                  Subscribe Now
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
 
       {/* Footer: Copy right and social media box */}
-      <div className="flex justify-between items-center w-full mb-10 px-6 py-4 border-2 rounded-4xl ">
+      <div className="flex justify-between items-center w-full mb-10 px-2 sm:px-6 py-4 border-2 rounded-4xl">
         <div className="font-semibold">BitApps@2024 CopyRight</div>
         <div className="flex items-center">
-          <div className="mr-3">Follow Us</div>
-          <div className="mr-3 border rounded-4xl p-2 cursor-pointer">
+          <div className="mr-1 sm:mr-3">Follow Us:</div>
+          <div className="mr-1 sm:mr-3 border rounded-4xl p-2 cursor-pointer">
             <Link to={"/"}>
               <FaFacebookF />
             </Link>
           </div>
-          <div className="mr-3 border rounded-4xl p-2 cursor-pointer">
+          <div className="mr-1 sm:mr-3 border rounded-4xl p-2 cursor-pointer">
             <Link to={"/"}>
               <FaYoutube />
             </Link>

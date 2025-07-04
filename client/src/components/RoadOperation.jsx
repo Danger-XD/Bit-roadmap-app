@@ -6,6 +6,7 @@ import { BiUpvote, BiSolidUpvote } from "react-icons/bi";
 
 const RoadOperation = () => {
   const { postId } = useParams();
+  // all the store of api
   const {
     upVoteBoolRequest,
     postUpvoteCheck,
@@ -14,6 +15,7 @@ const RoadOperation = () => {
   } = roadPageStore();
 
   const [showUpvote, setShowUpvote] = useState();
+  // To handle upvote button
   const handleClick = async () => {
     await upVoteBoolRequest(postId);
     await postUpvoteCheckRequest(postId);
@@ -35,15 +37,19 @@ const RoadOperation = () => {
     }
   }, [postId]);
   return (
+    // if authorized show/hide button to upvote
     <div className={showUpvote ? "w-full h-10 flex" : "hidden"}>
       <div>
+        {/* upvote button situation */}
         {upvoteChecker ? (
-          <button onClick={handleClick} className="flex items-center p-3">
+          // Upvoted button
+          <button onClick={handleClick} className="flex items-center p-2">
             <BiSolidUpvote className="text-orangy text-2xl cursor-pointer" />{" "}
             &nbsp; Upvoted
           </button>
         ) : (
-          <button onClick={handleClick} className="flex items-center p-3">
+          // To upvote button
+          <button onClick={handleClick} className="flex items-center p-2">
             <BiUpvote className="text-orangy text-2xl cursor-pointer" /> &nbsp;
             Upvote
           </button>

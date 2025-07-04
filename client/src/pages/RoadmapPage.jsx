@@ -5,7 +5,7 @@ import RoadComment from "../components/RoadComment";
 
 const RoadmapPage = () => {
   return (
-    <div className="container h-fit">
+    <div className="container h-fit my-8 sm:my-0">
       <RoadImage />
       <RoadOperation />
       <RoadDescription />

@@ -1,0 +1,23 @@
+GET
+replies for a comment to show
+for indention,index 0, 1, 2
+0 -> ml-2
+1 -> ml-4
+2 -> ml-8
+
+reply.docCount
+
+POST
+from server:
+if comment exist
+count reply number ? <= 3 
+create reply
+
+from client:
+docCount -> message: reach reply limit , create reply 
+
+UPDATE
+reply update
+
+DELETE
+reply delete

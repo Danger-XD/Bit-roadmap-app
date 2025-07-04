@@ -10,7 +10,7 @@
 }
 @layer component {
   .container {
-    @apply w-5xl mx-auto;
+    @apply w-full md:w-5xl mx-auto;
   }
   .flex-job {
     @apply flex justify-center items-center;
