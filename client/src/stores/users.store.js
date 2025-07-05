@@ -13,20 +13,23 @@ const userStore = create((set) => ({
       );
       set({ signupResponse: response.data });
     } catch (error) {
-      handleError(error.response?.data?.message);
+      const message = error.response?.data?.message || "Signup failed!";
+      handleError(message);
     }
   },
   isAuthentic: false,
-  loginResponse: {},
+  // loginResponse: {},
   loginInfoRequest: async (userInfo) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/v1/users/login`,
         userInfo
       );
-      set({ loginResponse: response.data, isAuthentic: true });
+      set({ isAuthentic: true });
+      return response.data;
     } catch (error) {
-      handleError(error.response?.data?.message);
+      const message = error.response?.data?.message || "Login failed!";
+      handleError(message);
     }
   },
 }));

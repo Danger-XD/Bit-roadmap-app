@@ -6,7 +6,7 @@ import { setCookies } from "../utilities/cookies";
 
 const LoginPage = () => {
   const [loginInfo, setLoginInfo] = useState({ email: "", password: "" });
-  const { loginResponse, loginInfoRequest } = userStore();
+  const { loginInfoRequest } = userStore();
   const navigate = useNavigate();
   const handleChanges = (e) => {
     const { name, value } = e.target;
@@ -22,23 +22,18 @@ const LoginPage = () => {
       handleError("Fields cannot be empty!");
       return;
     }
-    try {
-      await loginInfoRequest(loginInfo);
-      const { status, message, token } = loginResponse;
-      if (status) {
-        setCookies("token", token);
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/");
-        }, 1000);
-      }
-    } catch (error) {
-      handleError(error.message);
+    const { status, message, token } = await loginInfoRequest(loginInfo);
+    if (status) {
+      setCookies("token", token);
+      handleSuccess(message);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
   };
   return (
     <>
-      <div className="w-[19rem] sm:w-[22rem] h-fit py-8 mt-10 sm:mt-0 mb-24 shadow-effect flex-job flex-col rounded">
+      <div className="w-[20rem] sm:w-[22rem] h-fit py-8 mt-10 sm:mt-0 mb-24 shadow-effect flex-job flex-col rounded">
         <h2 className="font-extrabold text-3xl sm:text-4xl">Login</h2>
         <form onSubmit={handleLoginSubmit}>
           <div className="my-4">
