@@ -91,9 +91,9 @@ export const login = async (req, res) => {
     }
     const options = {
       maxAge: 24 * 60 * 60 * 1000,
-      httpOnly: process.env.SERVER_TOKEN_HTTP,
+      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "None",
     };
     // return and set token to cookie
     return res.status(200).cookie("token", token, options).json({
@@ -111,9 +111,9 @@ export const logout = async (req, res) => {
   try {
     const options = {
       maxAge: 0,
-      httpOnly: process.env.SERVER_TOKEN_HTTP,
+      httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "None",
     };
     return res
       .status(200)

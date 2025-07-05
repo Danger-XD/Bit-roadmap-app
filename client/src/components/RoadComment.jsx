@@ -206,6 +206,15 @@ const RoadComment = () => {
                           Reply
                         </button>
                       </div>
+                      {/* Show replies button */}
+                      <div>
+                        <button
+                          onClick={() => handleShowReply(item._id)}
+                          className="font-semibold text-[14px] mr-3 sm:mr-6 cursor-pointer"
+                        >
+                          {showReplies ? "Hide Replies" : " Show replies"}
+                        </button>
+                      </div>
                       {item.User.username === loggedInUser && (
                         <div className="flex">
                           {/* Update comment button */}
@@ -236,15 +245,6 @@ const RoadComment = () => {
                               className="font-semibold text-[14px] cursor-pointer"
                             >
                               Delete
-                            </button>
-                          </div>
-                          {/* Show replies button */}
-                          <div>
-                            <button
-                              onClick={() => handleShowReply(item._id)}
-                              className="font-semibold ml-3 sm:ml-6 text-[14px] cursor-pointer"
-                            >
-                              {showReplies ? "Hide Replies" : " Show replies"}
                             </button>
                           </div>
                         </div>
@@ -322,8 +322,12 @@ const RoadComment = () => {
                       {getAllReplies?.replies
                         ?.slice(0, 3)
                         .map((item, index) => (
-                          <div key={index} className={`ml-${index * 8 + 8}`}>
-                            <div className="my-2 py-3 px-6 mb-6 bg-gray-100 rounded flex justify-between items-center relative">
+                          <div key={index}>
+                            <div
+                              className={`ml-${
+                                index * 8 + 8
+                              } my-2 py-3 px-6 mb-6 bg-gray-100 rounded flex justify-between items-center relative`}
+                            >
                               <div>
                                 <div>{item.user.username}</div>
                                 <div>{item.reply}</div>
