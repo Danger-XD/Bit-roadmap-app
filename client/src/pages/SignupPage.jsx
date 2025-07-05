@@ -11,7 +11,7 @@ const SignupPage = () => {
     password: "",
   });
   // get instances from store
-  const { signupResponse, signupRequest } = userStore();
+  const { signupRequest } = userStore();
   // navigate instance
   const navigate = useNavigate();
   // set value for change in form
@@ -30,22 +30,18 @@ const SignupPage = () => {
       handleError("All fields are required!");
       return;
     }
-    try {
-      await signupRequest(registerInfo); // status, message, user->id and email
-      const { status, message, user } = signupResponse;
-      if (status) {
-        handleSuccess(message);
-        setTimeout(() => {
-          navigate("/auth/login");
-        }, 1000);
-      }
-    } catch (error) {
-      handleError(error.message);
+    // status, message, user->id and email
+    const { status, message, user } = await signupRequest(registerInfo);
+    if (status) {
+      handleSuccess(message);
+      setTimeout(() => {
+        navigate("/auth/login");
+      }, 1000);
     }
   };
   return (
     <>
-      <div className="w-[19rem] sm:w-[24rem] h-fit py-8 mt-10 sm:mt-0 mb-24 shadow-effect flex justify-center items-center flex-col rounded">
+      <div className="w-[20rem] sm:w-[24rem] h-fit py-8 mt-10 sm:mt-0 mb-24 shadow-effect flex justify-center items-center flex-col rounded">
         <h2 className="font-extrabold text-3xl sm:text-4xl">Sign up</h2>
         <form onSubmit={handleSubmit}>
           <div className="my-4">

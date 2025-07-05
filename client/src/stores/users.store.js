@@ -4,14 +4,13 @@ import axios from "axios";
 import { handleError } from "../utilities/toasts.js";
 
 const userStore = create((set) => ({
-  signupResponse: {},
   signupRequest: async (userInfo) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/api/v1/users/signup`,
         userInfo
       );
-      set({ signupResponse: response.data });
+      return response.data;
     } catch (error) {
       const message = error.response?.data?.message || "Signup failed!";
       handleError(message);
