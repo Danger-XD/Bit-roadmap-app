@@ -16,8 +16,15 @@ router
   .route("/r/:commentId")
   .post(verifyToken, replyController.postReplyComment);
 
+// PATCH -> To update a reply
+router
+  .route("/r/update/:replyId")
+  .patch(verifyToken, replyController.replyUpdate);
+
 // DELETE -> To delete a reply
 router
   .route("/r/delete/:replyId")
   .delete(verifyToken, replyController.deleteReply);
+
+  
 export default router;

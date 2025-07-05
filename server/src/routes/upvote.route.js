@@ -3,7 +3,11 @@ import { verifyToken } from "../middlewares/auth.middleware.js";
 import * as upvoteController from "../controllers/upvote.controller.js";
 const router = Router();
 
+// BASE API -> /api/v1/post/upvote
+
+// jwt verification for all
 router.use(verifyToken);
+
 // GET -> get the condition of user upvoted post
 router.route("/check/boolean/:postId").get(upvoteController.getPostUpvote)
 

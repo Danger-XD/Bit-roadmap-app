@@ -4,6 +4,7 @@ import axios from "axios";
 import { handleError, handleSuccess } from "../utilities/toasts";
 
 export const roadPageStore = create((set) => ({
+  // To get username for auth
   userInfoForAuth: {},
   userInfoForAuthRequest: async () => {
     try {
@@ -13,9 +14,10 @@ export const roadPageStore = create((set) => ({
       );
       set({ userInfoForAuth: response.data });
     } catch (error) {
-      handleError(error.message);
+      handleError(error?.response?.data.message);
     }
   },
+  // To upvote toggle
   upVoteBoolRequest: async (postId) => {
     try {
       await axios.post(
@@ -26,7 +28,7 @@ export const roadPageStore = create((set) => ({
         }
       );
     } catch (error) {
-      handleError(error.message);
+      handleError(error?.response?.data.message);
     }
   },
   // To check if a post is upvoted or not!
@@ -41,7 +43,7 @@ export const roadPageStore = create((set) => ({
       );
       set({ postUpvoteCheck: response?.data });
     } catch (error) {
-      handleError(error.message);
+      handleError(error?.response?.data.message);
     }
   },
   // Get all the data of a post
@@ -53,7 +55,7 @@ export const roadPageStore = create((set) => ({
       );
       set({ singlePostInfo: response?.data.post });
     } catch (error) {
-      handleError(error.message);
+      handleError(error?.response?.data.message);
     }
   },
   // get all the comments of a post
@@ -65,7 +67,7 @@ export const roadPageStore = create((set) => ({
       );
       set({ singlePostComment: response.data.post });
     } catch (error) {
-      handleError(error.message);
+      handleError(error?.response?.data.message);
     }
   },
   // create a comment
@@ -77,7 +79,7 @@ export const roadPageStore = create((set) => ({
         { withCredentials: true }
       );
     } catch (error) {
-      handleError(error.message);
+      handleError(error?.response?.data.message);
     }
   },
   // update a comment
@@ -88,9 +90,9 @@ export const roadPageStore = create((set) => ({
         { comment },
         { withCredentials: true }
       );
-      handleSuccess(response?.data.message)
+      handleSuccess(response?.data.message);
     } catch (error) {
-      handleError(error.message);
+      handleError(error?.response?.data.message);
     }
   },
   // delete a comment
@@ -98,6 +100,80 @@ export const roadPageStore = create((set) => ({
     try {
       const response = await axios.delete(
         `${import.meta.env.VITE_BASE_URL}/post/comment/c/delete/${commentId}`,
+        { withCredentials: true }
+      );
+      if (response?.data.deleted) {
+        handleSuccess(response.data.message);
+      }
+    } catch (error) {
+      handleError(error?.response?.data.message);
+    }
+  },
+  // get all replies
+  getAllReplies: {},
+  getAllRepliesRequest: async (commentId) => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/post/comment/reply/r/get/${commentId}`
+      );
+
+      if (response?.data.replies.length === 0) {
+        handleError("No replies found!");
+      } else {
+        set({ getAllReplies: response?.data });
+      }
+    } catch (error) {
+      handleError(error?.response?.data.message);
+    }
+  },
+  // get reply number
+  getReplyNumber: {},
+  getReplyNumberRequest: async (commentId) => {
+    try {
+      const response = await axios.get(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/post/comment/reply/r/number/${commentId}`
+      );
+
+      set({ getAllReplies: response?.data });
+    } catch (error) {
+      handleError(error?.response?.data.message);
+    }
+  },
+  // create a reply
+  createReplyRequest: async (commentId, reply) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/post/comment/reply/r/${commentId}`,
+        { reply },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      handleError(error?.response?.data.message);
+    }
+  },
+  // update a reply
+  updateReplyRequest: async (replyId, reply) => {
+    try {
+      const response = await axios.patch(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/post/comment/reply/r/update/${replyId}`,
+        { reply },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      handleError(error.message);
+    }
+  },
+  // delete a reply
+  deleteReplyRequest: async (replyId) => {
+    try {
+      const response = await axios.delete(
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/post/comment/reply/r/delete/${replyId}`,
         { withCredentials: true }
       );
       if (response?.data.deleted) {

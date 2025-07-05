@@ -3,6 +3,8 @@ const router = Router();
 import * as userController from "../controllers/user.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 
+// BASE API -> /api/v1/users
+
 // POST -> Username, email and password
 router.route("/signup").post(userController.signup);
 

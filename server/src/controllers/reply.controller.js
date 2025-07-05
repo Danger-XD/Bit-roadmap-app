@@ -12,9 +12,10 @@ export const getReplies = async (req, res) => {
       _id: new ObjectId(commentId),
     });
     if (!existingComment) {
-      return res
-        .status(404)
-        .json({ status: "failed", message: "Reply: Comment not found!" });
+      return res.status(404).json({
+        status: "failed",
+        message: "Reply: Comment not found!",
+      });
     }
     // get all the reply for that comment
     const replies = await replyModel.aggregate([
@@ -38,21 +39,30 @@ export const getReplies = async (req, res) => {
         },
       },
       {
+        $unwind: "$user",
+      },
+      {
+        $sort: { createdAt: 1 },
+      },
+      {
         $project: {
           _id: 1,
           reply: 1,
           user: 1,
           commentId: 1,
+          createdAt: 1,
         },
       },
-      {
-        $unwind: "$user",
-      },
     ]);
+
     if (!replies || replies.length === 0) {
       return res
-        .status(404)
-        .json({ status: "success", message: "Reply: Reply not found" });
+        .status(200)
+        .json({
+          status: "success",
+          message: "Reply: Reply not found",
+          replies: [],
+        });
     }
     return res.status(200).json({
       status: "success",
@@ -150,6 +160,48 @@ export const postReplyComment = async (req, res) => {
   }
 };
 
+export const replyUpdate = async (req, res) => {
+  try {
+    // get reply id
+    const { replyId: _id } = req.params;
+    // check reply exist
+    const existingReply = await replyModel.findOne({
+      _id: new ObjectId(_id),
+    });
+    if (!existingReply) {
+      return res
+        .status(404)
+        .json({ status: "failed", message: "Reply: Reply not found!" });
+    }
+    // get reply from user
+    const { reply } = req.body;
+    if (!reply) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Reply: Reply field required!",
+      });
+    }
+    const updateReply = await replyModel.findByIdAndUpdate(
+      { _id: new ObjectId(_id) },
+      { reply },
+      { new: true }
+    );
+    if (!updateReply) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Reply: Something went wrong with reply update!",
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      message: "Reply: Reply Updated successfully",
+      updateReply,
+    });
+  } catch (error) {
+    return res.status(500).json({ status: "failed", message: error.message });
+  }
+};
+
 export const deleteReply = async (req, res) => {
   try {
     // get reply id
@@ -165,13 +217,11 @@ export const deleteReply = async (req, res) => {
     }
     // delete reply
     const deleteReply = await replyModel.findByIdAndDelete({ _id });
-    return res
-      .status(200)
-      .json({
-        status: "success",
-        message: "Reply: Reply deleted!",
-        deleteReply,
-      });
+    return res.status(200).json({
+      status: "success",
+      message: "Reply: Reply deleted!",
+      deleteReply,
+    });
   } catch (error) {
     return res.status(500).json({ status: "failed", message: error.message });
   }
