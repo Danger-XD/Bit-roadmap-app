@@ -89,6 +89,7 @@ const AppNav = () => {
                             className={({ isActive }) =>
                               `${isActive ? "text-orangy" : "text-black"}`
                             }
+                            onClick={() => setShowOptions(!showOptions)}
                           >
                             {item.option}
                           </NavLink>
@@ -97,17 +98,33 @@ const AppNav = () => {
                       {/* auth options */}
                       {authentic ? (
                         <li className="font-bold text-xl tracking-wide">
-                          <Link to={"/"} onClick={handleLogout}>
+                          <Link
+                            to={"/"}
+                            onClick={() => {
+                              handleLogout();
+                              setShowOptions(!showOptions);
+                            }}
+                          >
                             Logout
                           </Link>
                         </li>
                       ) : (
                         <>
                           <li className="font-bold text-xl tracking-wide">
-                            <Link to={"/auth/login"}>Login</Link>
+                            <Link
+                              to={"/auth/login"}
+                              onClick={() => setShowOptions(!showOptions)}
+                            >
+                              Login
+                            </Link>
                           </li>
                           <li className="font-bold text-xl tracking-wide">
-                            <Link to={"/auth/signup"}>Register</Link>
+                            <Link
+                              to={"/auth/signup"}
+                              onClick={() => setShowOptions(!showOptions)}
+                            >
+                              Register
+                            </Link>
                           </li>
                         </>
                       )}
