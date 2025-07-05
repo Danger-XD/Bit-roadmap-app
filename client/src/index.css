@@ -1,6 +1,7 @@
 @import "tailwindcss";
 *{
   outline: none;
+  transition: all 0.3s ease-in-out;
 }
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
