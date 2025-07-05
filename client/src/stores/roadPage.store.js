@@ -9,7 +9,7 @@ export const roadPageStore = create((set) => ({
   userInfoForAuthRequest: async () => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/users/personal/info`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/users/personal/info`,
         { withCredentials: true }
       );
       set({ userInfoForAuth: response.data });
@@ -21,7 +21,7 @@ export const roadPageStore = create((set) => ({
   upVoteBoolRequest: async (postId) => {
     try {
       await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/post/upvote/toggle/${postId}`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/post/upvote/toggle/${postId}`,
         {},
         {
           withCredentials: true,
@@ -36,7 +36,9 @@ export const roadPageStore = create((set) => ({
   postUpvoteCheckRequest: async (postId) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/post/upvote/check/boolean/${postId}`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/post/upvote/check/boolean/${postId}`,
         {
           withCredentials: true,
         }
@@ -51,7 +53,7 @@ export const roadPageStore = create((set) => ({
   singlePostInfoRequest: async (postId) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/posts/roadmap/${postId}`
+        `${import.meta.env.VITE_BASE_URL}/api/v1/posts/roadmap/${postId}`
       );
       set({ singlePostInfo: response?.data.post });
     } catch (error) {
@@ -63,7 +65,9 @@ export const roadPageStore = create((set) => ({
   singlePostCommentRequest: async (postId) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/post/comment/c/comments/${postId}`
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/post/comment/c/comments/${postId}`
       );
       set({ singlePostComment: response.data.post });
     } catch (error) {
@@ -74,7 +78,9 @@ export const roadPageStore = create((set) => ({
   createCommentRequest: async (postId, comment) => {
     try {
       await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/post/comment/c/create/${postId}`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/post/comment/c/create/${postId}`,
         { comment },
         { withCredentials: true }
       );
@@ -86,7 +92,9 @@ export const roadPageStore = create((set) => ({
   updateCommentRequest: async (commentId, comment) => {
     try {
       const response = await axios.patch(
-        `${import.meta.env.VITE_BASE_URL}/post/comment/c/update/${commentId}`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/post/comment/c/update/${commentId}`,
         { comment },
         { withCredentials: true }
       );
@@ -99,7 +107,9 @@ export const roadPageStore = create((set) => ({
   deleteCommentRequest: async (commentId) => {
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_BASE_URL}/post/comment/c/delete/${commentId}`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/post/comment/c/delete/${commentId}`,
         { withCredentials: true }
       );
       if (response?.data.deleted) {
@@ -114,7 +124,9 @@ export const roadPageStore = create((set) => ({
   getAllRepliesRequest: async (commentId) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/post/comment/reply/r/get/${commentId}`
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/post/comment/reply/r/get/${commentId}`
       );
 
       if (response?.data.replies.length === 0) {
@@ -133,7 +145,7 @@ export const roadPageStore = create((set) => ({
       const response = await axios.get(
         `${
           import.meta.env.VITE_BASE_URL
-        }/post/comment/reply/r/number/${commentId}`
+        }/api/v1/post/comment/reply/r/number/${commentId}`
       );
 
       set({ getAllReplies: response?.data });
@@ -145,7 +157,9 @@ export const roadPageStore = create((set) => ({
   createReplyRequest: async (commentId, reply) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/post/comment/reply/r/${commentId}`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }/api/v1/post/comment/reply/r/${commentId}`,
         { reply },
         { withCredentials: true }
       );
@@ -159,7 +173,7 @@ export const roadPageStore = create((set) => ({
       const response = await axios.patch(
         `${
           import.meta.env.VITE_BASE_URL
-        }/post/comment/reply/r/update/${replyId}`,
+        }/api/v1/post/comment/reply/r/update/${replyId}`,
         { reply },
         { withCredentials: true }
       );
@@ -173,7 +187,7 @@ export const roadPageStore = create((set) => ({
       const response = await axios.delete(
         `${
           import.meta.env.VITE_BASE_URL
-        }/post/comment/reply/r/delete/${replyId}`,
+        }/api/v1/post/comment/reply/r/delete/${replyId}`,
         { withCredentials: true }
       );
       if (response?.data.deleted) {

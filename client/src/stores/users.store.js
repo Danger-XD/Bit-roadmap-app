@@ -8,7 +8,7 @@ const userStore = create((set) => ({
   signupRequest: async (userInfo) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/users/signup`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/users/signup`,
         userInfo
       );
       set({ signupResponse: response.data });
@@ -21,7 +21,7 @@ const userStore = create((set) => ({
   loginInfoRequest: async (userInfo) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/users/login`,
+        `${import.meta.env.VITE_BASE_URL}/api/v1/users/login`,
         userInfo
       );
       set({ loginResponse: response.data, isAuthentic: true });
