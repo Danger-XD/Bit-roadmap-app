@@ -31,7 +31,7 @@ const RoadComment = () => {
   const [showReplyBox, setShowReplyBox] = useState();
   const [showUpdateBox, setShowUpdateBox] = useState();
   const [showReplyUpdateBox, setShowReplyUpdateBox] = useState();
-  const [showReplies, setShowReplies] = useState(false);
+  const [showReplies, setShowReplies] = useState();
   const navigate = useNavigate();
   // To get the value written in the comment/reply update box
   const handleChange = (e) => {
@@ -138,7 +138,7 @@ const RoadComment = () => {
     await deleteReplyRequest(replyId);
   };
   const handleShowReply = async (commentId) => {
-    setShowReplies(!showReplies);
+    setShowReplies(commentId);
     if (showReplies) {
       await getAllRepliesRequest(commentId);
     }
@@ -212,7 +212,9 @@ const RoadComment = () => {
                           onClick={() => handleShowReply(item._id)}
                           className="font-semibold text-[14px] mr-3 sm:mr-6 cursor-pointer"
                         >
-                          {showReplies ? "Hide Replies" : " Show replies"}
+                          {showReplies === item._id
+                            ? "Hide Replies"
+                            : " Show replies"}
                         </button>
                       </div>
                       {item.User.username === loggedInUser && (
@@ -319,88 +321,88 @@ const RoadComment = () => {
                   {/* Replies */}
                   {showReplies && (
                     <div className="flex flex-col h-fit mb-4">
-                      {getAllReplies?.replies
+                      {getAllReplies[item._id]
                         ?.slice(0, 3)
-                        .map((item, index) => (
-                          <div>
+                        .map((replyItem, index) => (
+                          <div key={replyItem._id}>
                             <div
-                              key={index}
-                              className={`ml-${
-                                index * 8 + 8
-                              } my-2 py-3 px-6 mb-6 bg-gray-100 rounded flex justify-between items-center relative`}
+                              style={{ marginLeft: `${index * 16 + 16}px` }}
+                              className="my-2 py-3 px-6 mb-6 bg-gray-100 rounded flex justify-between items-center relative"
                             >
                               <div>
-                                <div>{item.user.username}</div>
-                                <div>{item.reply}</div>
+                                <div>{replyItem.user.username}</div>
+                                <div>{replyItem.reply}</div>
                               </div>
                               <div className="absolute flex -bottom-6">
-                                {item.user.username === loggedInUser && (
+                                {replyItem.user.username === loggedInUser && (
                                   <div className="flex">
-                                    <div>
-                                      <button
-                                        onClick={() => {
-                                          handleReplyUpdateBox(item._id);
-                                          setUpdateReplyInfo({
-                                            reply: item.reply,
-                                          });
-                                        }}
-                                        className="font-semibold text-[14px] mr-3 sm:mr-6 cursor-pointer"
-                                      >
-                                        Update
-                                      </button>
-                                    </div>
-                                    <div>
-                                      <button
-                                        type="button"
-                                        onClick={(e) => {
-                                          if (
-                                            window.confirm(
-                                              "Are you sure you want to delete this reply?"
-                                            )
-                                          ) {
-                                            handleDeleteReply(e, item._id);
-                                          }
-                                        }}
-                                        className="font-semibold text-[14px] cursor-pointer"
-                                      >
-                                        Delete
-                                      </button>
-                                    </div>
+                                    <button
+                                      onClick={() => {
+                                        handleReplyUpdateBox(replyItem._id);
+                                        setUpdateReplyInfo({
+                                          reply: replyItem.reply,
+                                        });
+                                      }}
+                                      className="font-semibold text-[14px] mr-3 sm:mr-6 cursor-pointer"
+                                    >
+                                      Update
+                                    </button>
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        if (
+                                          window.confirm(
+                                            "Are you sure you want to delete this reply?"
+                                          )
+                                        ) {
+                                          handleDeleteReply(e, replyItem._id);
+                                        }
+                                      }}
+                                      className="font-semibold text-[14px] cursor-pointer"
+                                    >
+                                      Delete
+                                    </button>
                                   </div>
                                 )}
                               </div>
                             </div>
-                            <div>
-                              {/* Reply Update box */}
-                              {showReplyUpdateBox === item._id && (
-                                <div className="bg-gray-200 rounded p-2 mt-8">
-                                  <form
-                                    onSubmit={(e) =>
-                                      handleReplyUpdateSubmit(e, item._id)
-                                    }
-                                  >
-                                    <div>
-                                      <textarea
-                                        name="replyUpdate"
-                                        id="replyUpdate"
-                                        className="resize-none bg-white w-full pl-2 pt-2"
-                                        rows={4}
-                                        value={updateReplyInfo.reply}
-                                        onChange={handleChange}
-                                      ></textarea>
-                                    </div>
-                                    <div className="text-end">
-                                      <button
-                                        type="submit"
-                                        className="cursor-pointer bg-black text-white font-semibold px-4 py-2 rounded-xl"
-                                      >
-                                        Update
-                                      </button>
-                                    </div>
-                                  </form>
-                                </div>
-                              )}
-                            </div>
+
+                            {/* Reply Update Box */}
+                            {showReplyUpdateBox === replyItem._id && (
+                              <div
+                                className="bg-gray-200 rounded p-2 mt-8"
+                                style={{ marginLeft: `${index * 16 + 16}px` }}
+                              >
+                                <form
+                                  onSubmit={(e) =>
+                                    handleReplyUpdateSubmit(e, replyItem._id)
+                                  }
+                                >
+                                  <textarea
+                                    name="replyUpdate"
+                                    id="replyUpdate"
+                                    className="resize-none bg-white w-full pl-2 pt-2"
+                                    rows={4}
+                                    value={updateReplyInfo.reply}
+                                    onChange={handleChange}
+                                  ></textarea>
+                                  <div className="text-end">
+                                    <button
+                                      onClick={handleCancelButton}
+                                      className="cursor-pointer bg-black text-white font-semibold px-4 py-2 rounded-xl"
+                                    >
+                                      Cancel
+                                    </button>{" "}
+                                    <button
+                                      type="submit"
+                                      className="cursor-pointer bg-black text-white font-semibold px-4 py-2 rounded-xl"
+                                    >
+                                      Update
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            )}
                           </div>
                         ))}
                     </div>

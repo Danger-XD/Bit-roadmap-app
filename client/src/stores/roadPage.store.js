@@ -122,11 +122,17 @@ export const roadPageStore = create((set) => ({
         }/api/v1/post/comment/reply/r/get/${commentId}`
       );
 
-      if (response?.data.replies.length === 0) {
+      const replies = response?.data?.replies || [];
+
+      if (replies.length === 0) {
         handleError("No replies found!");
-      } else {
-        set({ getAllReplies: response?.data });
       }
+      set((state) => ({
+        getAllReplies: {
+          ...state.getAllReplies,
+          [commentId]: replies,
+        },
+      }));
     } catch (error) {
       handleError(error?.response?.data.message);
     }

@@ -3,6 +3,7 @@ import replyModel from "./../models/reply.model.js";
 import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
+
 export const getReplies = async (req, res) => {
   try {
     // get comment id
@@ -60,7 +61,7 @@ export const getReplies = async (req, res) => {
         .status(200)
         .json({
           status: "success",
-          message: "Reply: Reply not found",
+          message: "No replies found for this comment",
           replies: [],
         });
     }
@@ -123,7 +124,7 @@ export const postReplyComment = async (req, res) => {
     });
     if (!checkComment) {
       return res
-        .status(200)
+        .status(404)
         .json({ status: "failed", message: "Reply: Comment not found!" });
     }
     // count comments reply
