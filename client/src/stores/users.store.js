@@ -1,12 +1,11 @@
-// import.meta.env
 import { create } from "zustand";
-import axios from "axios";
+import axiosInstance from "./../utilities/axiosInstance.js";
 import { handleError } from "../utilities/toasts.js";
 
 const userStore = create((set) => ({
   signupRequest: async (userInfo) => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/v1/users/signup`,
         userInfo
       );
@@ -20,7 +19,7 @@ const userStore = create((set) => ({
   // loginResponse: {},
   loginInfoRequest: async (userInfo) => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/v1/users/login`,
         userInfo
       );

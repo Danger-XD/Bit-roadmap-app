@@ -25,6 +25,7 @@ const LoginPage = () => {
     const { status, message, token } = await loginInfoRequest(loginInfo);
     if (status) {
       setCookies("token", token);
+      localStorage.setItem("token", token);
       handleSuccess(message);
       setTimeout(() => {
         navigate("/");

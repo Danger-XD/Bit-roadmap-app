@@ -19,6 +19,7 @@ const AppNav = () => {
   const handleLogout = () => {
     setAuthentic(false);
     deleteCookies("token");
+    localStorage.removeItem("token");
   };
   useEffect(() => {
     if (getCookies("token")) {

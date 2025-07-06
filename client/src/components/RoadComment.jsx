@@ -322,8 +322,9 @@ const RoadComment = () => {
                       {getAllReplies?.replies
                         ?.slice(0, 3)
                         .map((item, index) => (
-                          <div key={index}>
+                          <div>
                             <div
+                              key={index}
                               className={`ml-${
                                 index * 8 + 8
                               } my-2 py-3 px-6 mb-6 bg-gray-100 rounded flex justify-between items-center relative`}

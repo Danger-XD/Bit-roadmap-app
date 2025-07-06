@@ -1,6 +1,6 @@
 // All the api of single page of roadmap
 import { create } from "zustand";
-import axios from "axios";
+import axiosInstance from "./../utilities/axiosInstance.js";
 import { handleError, handleSuccess } from "../utilities/toasts";
 
 export const roadPageStore = create((set) => ({
@@ -8,9 +8,8 @@ export const roadPageStore = create((set) => ({
   userInfoForAuth: {},
   userInfoForAuthRequest: async () => {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/v1/users/personal/info`,
-        { withCredentials: true }
+      const response = await axiosInstance.get(
+        `${import.meta.env.VITE_BASE_URL}/api/v1/users/personal/info`
       );
       set({ userInfoForAuth: response.data });
     } catch (error) {
@@ -20,12 +19,9 @@ export const roadPageStore = create((set) => ({
   // To upvote toggle
   upVoteBoolRequest: async (postId) => {
     try {
-      await axios.post(
+      await axiosInstance.post(
         `${import.meta.env.VITE_BASE_URL}/api/v1/post/upvote/toggle/${postId}`,
-        {},
-        {
-          withCredentials: true,
-        }
+        {}
       );
     } catch (error) {
       handleError(error?.response?.data.message);
@@ -35,7 +31,7 @@ export const roadPageStore = create((set) => ({
   postUpvoteCheck: {},
   postUpvoteCheckRequest: async (postId) => {
     try {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `${
           import.meta.env.VITE_BASE_URL
         }/api/v1/post/upvote/check/boolean/${postId}`,
@@ -52,7 +48,7 @@ export const roadPageStore = create((set) => ({
   singlePostInfo: {},
   singlePostInfoRequest: async (postId) => {
     try {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `${import.meta.env.VITE_BASE_URL}/api/v1/posts/roadmap/${postId}`
       );
       set({ singlePostInfo: response?.data.post });
@@ -64,7 +60,7 @@ export const roadPageStore = create((set) => ({
   singlePostComment: [],
   singlePostCommentRequest: async (postId) => {
     try {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `${
           import.meta.env.VITE_BASE_URL
         }/api/v1/post/comment/c/comments/${postId}`
@@ -77,12 +73,11 @@ export const roadPageStore = create((set) => ({
   // create a comment
   createCommentRequest: async (postId, comment) => {
     try {
-      await axios.post(
+      await axiosInstance.post(
         `${
           import.meta.env.VITE_BASE_URL
         }/api/v1/post/comment/c/create/${postId}`,
-        { comment },
-        { withCredentials: true }
+        { comment }
       );
     } catch (error) {
       handleError(error?.response?.data.message);
@@ -91,12 +86,11 @@ export const roadPageStore = create((set) => ({
   // update a comment
   updateCommentRequest: async (commentId, comment) => {
     try {
-      const response = await axios.patch(
+      const response = await axiosInstance.patch(
         `${
           import.meta.env.VITE_BASE_URL
         }/api/v1/post/comment/c/update/${commentId}`,
-        { comment },
-        { withCredentials: true }
+        { comment }
       );
       handleSuccess(response?.data.message);
     } catch (error) {
@@ -106,11 +100,10 @@ export const roadPageStore = create((set) => ({
   // delete a comment
   deleteCommentRequest: async (commentId) => {
     try {
-      const response = await axios.delete(
+      const response = await axiosInstance.delete(
         `${
           import.meta.env.VITE_BASE_URL
-        }/api/v1/post/comment/c/delete/${commentId}`,
-        { withCredentials: true }
+        }/api/v1/post/comment/c/delete/${commentId}`
       );
       if (response?.data.deleted) {
         handleSuccess(response.data.message);
@@ -123,7 +116,7 @@ export const roadPageStore = create((set) => ({
   getAllReplies: {},
   getAllRepliesRequest: async (commentId) => {
     try {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `${
           import.meta.env.VITE_BASE_URL
         }/api/v1/post/comment/reply/r/get/${commentId}`
@@ -142,7 +135,7 @@ export const roadPageStore = create((set) => ({
   getReplyNumber: {},
   getReplyNumberRequest: async (commentId) => {
     try {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `${
           import.meta.env.VITE_BASE_URL
         }/api/v1/post/comment/reply/r/number/${commentId}`
@@ -156,12 +149,11 @@ export const roadPageStore = create((set) => ({
   // create a reply
   createReplyRequest: async (commentId, reply) => {
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `${
           import.meta.env.VITE_BASE_URL
         }/api/v1/post/comment/reply/r/${commentId}`,
-        { reply },
-        { withCredentials: true }
+        { reply }
       );
     } catch (error) {
       handleError(error?.response?.data.message);
@@ -170,12 +162,11 @@ export const roadPageStore = create((set) => ({
   // update a reply
   updateReplyRequest: async (replyId, reply) => {
     try {
-      const response = await axios.patch(
+      const response = await axiosInstance.patch(
         `${
           import.meta.env.VITE_BASE_URL
         }/api/v1/post/comment/reply/r/update/${replyId}`,
-        { reply },
-        { withCredentials: true }
+        { reply }
       );
     } catch (error) {
       handleError(error.message);
@@ -184,11 +175,10 @@ export const roadPageStore = create((set) => ({
   // delete a reply
   deleteReplyRequest: async (replyId) => {
     try {
-      const response = await axios.delete(
+      const response = await axiosInstance.delete(
         `${
           import.meta.env.VITE_BASE_URL
-        }/api/v1/post/comment/reply/r/delete/${replyId}`,
-        { withCredentials: true }
+        }/api/v1/post/comment/reply/r/delete/${replyId}`
       );
       if (response?.data.deleted) {
         handleSuccess(response.data.message);
