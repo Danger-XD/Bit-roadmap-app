@@ -27,3 +27,4 @@ A MERN(MongoDB, Express.js, React.js, Node.js) stack website for a roadmap websi
 - CLIENT_BASE_URL
 
 
+### Bug found and to be fixed: "Show reply" button need to be clicked twice to show replies!
